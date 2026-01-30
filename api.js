@@ -11,15 +11,15 @@ app.use(express.json());
 
 app.post('/login', async(req, res)=>{
 
-    const { email, senha } = req.body
+    const { email, senha, cpf } = req.body
  
-    if(!email || !senha) {
-    return res.status(400).json({ error: 'Email e senha são obrigatórios' })
+    if(!email || !senha || !cpf) {
+    return res.status(400).json({ error: 'Email, senha e cpf são obrigatórios' })
 }
 
     const { data, error } = await supabase
     .from('login')
-    .insert([{ email, senha }]);
+    .insert([{ email, senha, cpf }]);
 
     if(error){
         return res.status(500).json({ error: error.message})
@@ -40,4 +40,5 @@ app.get('/contas', async (req, res) => {
 })
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
+
 });
